@@ -16,7 +16,7 @@ function changeColors(){
   ctx.fillStyle = '#'+
    Math.round(Math.random()*8388607.5).toString(16);
 }
-setInterval(changeColors, 0.0000000000000000000000000000000000000000000000000000000000005);
+setInterval(changeColors, 1);
 
 function createArray(rows) { //creates a 2 dimensional array of required height
     var arr = [];
@@ -28,7 +28,7 @@ function createArray(rows) { //creates a 2 dimensional array of required height
 
 function fillRandom() { //fill the grid randomly
     for (var j = 380; j < gridHeight - 130; j++) { //iterate through rows
-        for (var k = 350; k < gridWidth + 200; k++){ //iterate through columns
+        for (var k = 0; k < gridWidth + 200; k++){ //iterate through columns
             theGrid[j][k] = Math.round(Math.random());
         }
     }
@@ -80,7 +80,7 @@ function updateGrid() { //perform one iteration of grid update
         }
     }
 
-    mirror edges to create wraparound effect
+    //mirror edges to create wraparound effect
 
     for (var l = 1; l < gridHeight - 1; l++) { //iterate through rows
         //top and bottom
