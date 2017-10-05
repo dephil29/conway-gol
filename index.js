@@ -1,26 +1,22 @@
-var gridHeight = 500;
-var gridWidth = 500;
+var gridHeight = 650;
+var gridWidth = 900;
 var theGrid = createArray(gridWidth);
 var mirrorGrid = createArray(gridWidth);
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
-ctx.fillStyle = 'rgb('+
-      Math.floor(Math.random()*256)+','+
-      Math.floor(Math.random()*256)+','+
-      Math.floor(Math.random()*256)+')';
+
+document.getElementById("canvas").style.background = '#000000';
+ctx.fillStyle = "#ffffff";
 
 fillRandom(); //create the starting state for the grid by filling it with random cells
-
 tick(); //call main loop
-
 //functions
-function tick() { //main loop
-    // console.time("loop");
-    drawGrid();
-    updateGrid();
-    // console.timeEnd("loop");
-    requestAnimationFrame(tick);
+
+function changeColors(){
+  ctx.fillStyle = '#'+
+   Math.round(Math.random()*8388607.5).toString(16);
 }
+setInterval(changeColors, 0.0000000000000000000000000000000000000000000000000000000000005);
 
 function createArray(rows) { //creates a 2 dimensional array of required height
     var arr = [];
@@ -31,8 +27,8 @@ function createArray(rows) { //creates a 2 dimensional array of required height
 }
 
 function fillRandom() { //fill the grid randomly
-    for (var j = 100; j < gridHeight - 100; j++) { //iterate through rows
-        for (var k = 100; k < gridWidth - 100; k++) { //iterate through columns
+    for (var j = 380; j < gridHeight - 130; j++) { //iterate through rows
+        for (var k = 350; k < gridWidth + 200; k++){ //iterate through columns
             theGrid[j][k] = Math.round(Math.random());
         }
     }
@@ -44,13 +40,11 @@ var liveCount = 0;
     for (var j = 1; j < gridHeight; j++) { //iterate through rows
         for (var k = 1; k < gridWidth; k++) { //iterate through columns
             if (theGrid[j][k] === 1) {
-                ctx.fillRect(j, k, 1, 1);
+                ctx.fillRect(j, k, 2, 2);
                   liveCount++;
-
             }
         }
     }
-      // console.log(liveCount/100);
 }
 
 function updateGrid() { //perform one iteration of grid update
@@ -86,7 +80,7 @@ function updateGrid() { //perform one iteration of grid update
         }
     }
 
-    //mirror edges to create wraparound effect
+    mirror edges to create wraparound effect
 
     for (var l = 1; l < gridHeight - 1; l++) { //iterate through rows
         //top and bottom
@@ -103,4 +97,11 @@ function updateGrid() { //perform one iteration of grid update
     var temp = theGrid;
     theGrid = mirrorGrid;
     mirrorGrid = temp;
+}
+
+
+function tick() { //main loop
+    drawGrid();
+    updateGrid();
+    requestAnimationFrame(tick);
 }
